@@ -1,17 +1,17 @@
 package com.example.android.wander
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
+import com.example.android.wander.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.android.wander.databinding.ActivityMapsBinding
+import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -41,6 +41,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
+        setMapLongClick(map)
+
         val latitude = 50.581209413973724
         val longitude = -3.4685453973626474
         val zoomLevel = 18f
@@ -49,7 +51,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val dawlish = LatLng(latitude, longitude)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(dawlish, zoomLevel))
         map.addMarker(MarkerOptions().position(dawlish).title("Marker in Dawlish Lawn"))
+    }
 
+    private fun setMapLongClick(map: GoogleMap) {
+        map.setOnMapLongClickListener { latLng ->
+            // A Snippet is Additional text that's displayed below the title.
+            val snippet = String.format(
+                Locale.getDefault(),
+                "Lat: %1$.5f, Long: %2$.5f",
+                latLng.latitude,
+                latLng.longitude
+            )
+            map.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .title(getString(R.string.dropped_pin))
+                    .snippet(snippet)
+            )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
