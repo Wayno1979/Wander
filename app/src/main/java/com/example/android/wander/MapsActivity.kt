@@ -13,7 +13,7 @@ import com.example.android.wander.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +37,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        map = googleMap
 
         // Add a marker in dawlish and move the camera
         val dawlish = LatLng(50.581209413973724, -3.4685453973626474)
-        mMap.addMarker(MarkerOptions().position(dawlish).title("Marker in Dawlish Lawn"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dawlish))
+        map.addMarker(MarkerOptions().position(dawlish).title("Marker in Dawlish Lawn"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(dawlish))
     }
 }
