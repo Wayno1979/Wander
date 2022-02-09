@@ -41,8 +41,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        setMapLongClick(map)
-
         val latitude = 50.581209413973724
         val longitude = -3.4685453973626474
         val zoomLevel = 18f
@@ -51,6 +49,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val dawlish = LatLng(latitude, longitude)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(dawlish, zoomLevel))
         map.addMarker(MarkerOptions().position(dawlish).title("Marker in Dawlish Lawn"))
+
+        setMapLongClick(map)
+        setPoiClick(map)
     }
 
     private fun setMapLongClick(map: GoogleMap) {
@@ -68,6 +69,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .title(getString(R.string.dropped_pin))
                     .snippet(snippet)
             )
+        }
+    }
+
+    private fun setPoiClick(map: GoogleMap) {
+        map.setOnPoiClickListener { poi ->
+            val poiMarker = map.addMarker(
+                MarkerOptions()
+                    .position(poi.latLng)
+                    .title(poi.name)
+            )
+            poiMarker?.showInfoWindow()
         }
     }
 
