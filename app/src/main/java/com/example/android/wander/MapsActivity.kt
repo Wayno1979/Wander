@@ -41,10 +41,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
+        val latitude = 50.581209413973724
+        val longitude = -3.4685453973626474
+        val zoomLevel = 18f
+
         // Add a marker in dawlish and move the camera
-        val dawlish = LatLng(50.581209413973724, -3.4685453973626474)
+        val dawlish = LatLng(latitude, longitude)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(dawlish, zoomLevel))
         map.addMarker(MarkerOptions().position(dawlish).title("Marker in Dawlish Lawn"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(dawlish))
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
